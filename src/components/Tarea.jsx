@@ -55,7 +55,7 @@ const Tarea = () => {
           </button>
         </div>
       </div>
-      <div className="row col-6 mt-4">
+      <div className="row col-12 col-sm-6 mt-4">
         <h3>Lista de tareas</h3>
         <div >
           <ul className="list-group">
