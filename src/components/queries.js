@@ -49,14 +49,14 @@ export const obtenerTareaApi =  async (_id) => {
     }
 }
 
-export const editarTareaAPI =  async (_id, tarea) => {
+export const editarTareaAPI =  async (_id, nombreTarea) => {
     try{
         const respuesta = await fetch(URL+"/"+_id,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(tarea)
+            body: JSON.stringify(nombreTarea)
         })
         return respuesta
     } catch(e){

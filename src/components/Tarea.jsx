@@ -65,15 +65,17 @@ const Tarea = () => {
           consultarAPI().then(respuesta => {
             setTareas(respuesta)
           })
+          setId("")
+          setModoEdicion(false)
       } else{
         console.log("no se pudo eliminar")
       }
     })
 }
    
-const obtenerTarea = _id => {
-
-  obtenerTareaApi(_id).then((respuesta) => {
+const obtenerTarea = item => {
+  setId(item._id)
+  obtenerTareaApi(item._id).then((respuesta) => {
     if(respuesta.status === 200){
       setValue("nombreTarea", respuesta.dato.nombreTarea)
       setModoEdicion(true)
@@ -81,7 +83,7 @@ const obtenerTarea = _id => {
   }
 
   const editarTarea = (datos) => {
-    editarTareaAPI(id, datos.nombreTarea).then(respuesta => {
+    editarTareaAPI(id, datos).then(respuesta => {
       if(respuesta.status === 200){
           Swal.fire(
             "Tarea editada",
@@ -95,7 +97,7 @@ const obtenerTarea = _id => {
         reset()
       } 
       if(respuesta.status === 400) {
-        Swal.fire("Hubo un error", "No pudimos agregar la tarea", "error")
+        Swal.fire("Hubo un error", "No pudimos editar la tarea", "error")
         return
       }
     })
@@ -197,7 +199,7 @@ const obtenerTarea = _id => {
                     </button>
                     <button 
                     className="btn btn-warning btn-sm float-end mx-2"
-                    onClick={()=> obtenerTarea(item._id)}>
+                    onClick={()=> obtenerTarea(item)}>
                     Edit
                     </button>
                     </div>
