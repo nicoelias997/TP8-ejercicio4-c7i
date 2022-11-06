@@ -1,5 +1,6 @@
 import React  from "react";
 import { useEffect, useState } from "react";
+import {consultarAPI, crearTareaApi} from "./queries"
 
 const Tarea = () => {
 
@@ -10,7 +11,9 @@ const Tarea = () => {
     
     //ciclo de vida componente
     useEffect(() => {
-      localStorage.setItem("listaTareas", JSON.stringify(tareas))
+      consultarAPI().then(respuesta => {
+        setTareas(respuesta)
+      })
     },[tareas])
 
   const agregarTarea = () => {
@@ -18,11 +21,15 @@ const Tarea = () => {
         console.log("Error")
         return
     } else {
-        setTareas([
-            ...tareas, 
-        {nombreTarea: tarea}
-        ])
-    setTarea("")
+        crearTareaApi(tarea).then(respuesta => {
+          if(respuesta.status === 201){
+            setTareas(tarea)
+          } else{
+            console.log("Ocurrio un error")
+          }
+        }
+        )
+        setTarea("")
     }
   };
 
